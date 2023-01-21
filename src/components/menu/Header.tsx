@@ -4,8 +4,7 @@ import { HamburgerIcon } from '@chakra-ui/icons'
 
 function Header() {
     return (
-        <header>
-            <Flex>
+        <Flex>
             <Flex className='mt-4 w-1/12 ml-3 justify-center'>
                 <IconButton aria-label={'Open Menu'} icon={<HamburgerIcon />} colorScheme='blue'/>
             </Flex>
@@ -19,8 +18,7 @@ function Header() {
             >
                 New task
             </button>
-            </Flex>
-        </header>
+        </Flex>
     );
 }
 

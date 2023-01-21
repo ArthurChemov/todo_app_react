@@ -1,7 +1,7 @@
 export const links = [
   {
     name: "All tasks",
-    path: "/components/routes/Home",
+    path: "/",
   },
   {
     name: "Important tasks",
