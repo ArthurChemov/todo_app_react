@@ -21,7 +21,7 @@ export function useDate() {
     while (true) {
       day = today.toLocaleDateString(locale, { weekday: 'long' });
       date = `${day}, ${today.getDate()} ${today.toLocaleDateString(locale, { month: 'long' })}\n\n`;
-      time = today.toLocaleTimeString(locale, { hour: 'numeric', hour12: false, minute: 'numeric' });
+      time = today.toLocaleTimeString(locale, { hour: 'numeric', minute: 'numeric', hourCycle: 'h23' });
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
   })()
