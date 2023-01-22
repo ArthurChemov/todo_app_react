@@ -8,9 +8,6 @@ module.exports = {
       },
       screens:{
         small: '480px'
-      },
-      height:{
-        hbody: '100%-72px'
       }
     },
   },

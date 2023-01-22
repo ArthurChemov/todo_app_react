@@ -1,16 +1,16 @@
 import { BrowserRouter } from 'react-router-dom';
-import { Box } from "@chakra-ui/react";
-import Header from './components/menu/Header';
-import Sidebar from './components/menu/Sidebar';
+import { ChakraProvider, Box } from "@chakra-ui/react";
+import Body from './components/menu/Body';
 
 function App() {
   return (
-    <Box className="h-screen bg-gradient-to-b from-indigo-500 via-purple-500 to-orange-500">
+    <ChakraProvider>
       <BrowserRouter>
-        <Header/>
-        <Sidebar/>
+        <Box className="h-screen bg-gradient-to-b from-indigo-500 via-purple-500 to-orange-500">
+          <Body/>
+        </Box>
       </BrowserRouter>
-    </Box>
+    </ChakraProvider>
   );
 }
 
