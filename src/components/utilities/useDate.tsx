@@ -1,17 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export function useDate() {
   const locale = 'en';
-  const [today, setDate] = useState(new Date());
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setDate(new Date());
-    }, 60 * 1000);
-    return () => {
-      clearInterval(timer);
-    }
-  }, []);
+  const [today] = useState(new Date());
 
   let day;
   let date;
