@@ -1,7 +1,6 @@
 import { Flex, Box, IconButton } from '@chakra-ui/react'
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
-import ModalCreateTask from "../utilities/ModalCreateTask";
 import Sidebar from './Sidebar';
 import Main from './Main';
 
@@ -18,9 +17,6 @@ function Body () {
                 </Flex>
                 <Flex className='font-bold justify-center font-losAngeles text-6xl pt-3 w-full'>
                     To-Do List
-                </Flex>
-                <Flex>
-                    <ModalCreateTask onClose={ () => { } } onConfirm={() => { } }/>
                 </Flex>
             </Flex>
             <Flex className=' h-full w-full flex-row relative'>

@@ -4,5 +4,4 @@ export interface Task {
   date: string;
   completed: boolean;
   important: boolean;
-  id: string;
 }
