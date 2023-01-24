@@ -1,12 +1,13 @@
 import { Flex, Box, Select } from "@chakra-ui/react";
+import Tasks from "./Tasks";
 
-function Main() {
+function Main () {
     return (
         <Flex className=" w-full flex-col">
-            <Box className="small:w-full md:w-1/4 lg:w-1/6">
+            <Box className="small:w-full md:w-1/3 lg:w-2/5">
                 <form className=" relative pt-6 mx-3" autoComplete="off">
                     <label htmlFor="search" className="sr-only"></label>
-                    <input type="search" id="search" placeholder="Search task" className=" small: w-full h-8 md:max-w-xs rounded-md inputStyles pl-2"/>
+                    <input type="search" id="search" placeholder="Search task" className=" small: w-full h-8 md:max-w-1/3 lg:max-w-2/5 rounded-md inputStyles pl-2"/>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="absolute small:w-3 small:top-9 md:w-4 md:top-8 right-4 text-slate-400">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"></path>
                     </svg>
@@ -35,6 +36,9 @@ function Main() {
                     </Select>
                 </Flex>
             </Flex>
+            <Box>
+                <Tasks/>
+            </Box>
         </Flex>
     );
 }
