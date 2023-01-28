@@ -1,4 +1,6 @@
-import { Flex } from '@chakra-ui/react'
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+import { DeleteIcon, CheckIcon, StarIcon } from '@chakra-ui/icons';
+import { Flex, IconButton } from '@chakra-ui/react'
 import { Task } from "./interfaces";
 
 interface Props {
@@ -7,14 +9,27 @@ interface Props {
 }
 
 const TodoTask = ({ task, completeTask }: Props) => {
+
   return (
-    <Flex className=" flex-col justify-center items-center gap-1 bg-slate-100 rounded border-neutral-700">
-        <span className="rounded mr-2">{task.title} </span>
-        <span className="rounded mr-2">{task.description} </span>
-        <span className="rounded mr-2">{task.date} </span>
-        <span className="rounded mr-2">{task.completed} </span>
-        <span className="rounded mr-2">{task.important} </span>
-      <button onClick={() => {completeTask(task.title); }} className=' text-black'> Delete </button>
+    <Flex className=" flex-col p-3 text-white bg-sky-500 rounded-xl border-[1px] border-slate-600 hover:border-0 hover:shadow-2xl w-[270px] min-h-[150px]">
+      <Flex className=" flex-col gap-1 justify-center items-start min-h-[88px]">
+        <span className="rounded">{task.title} </span>
+        <span className="rounded">{task.description} </span>
+        <span className="rounded">{task.date} </span>
+        <span className="rounded">{task.completed} </span>
+        <span className="rounded">{task.important} </span>
+      </Flex>
+      <Flex className=" flex-row-reverse">
+        <IconButton aria-label={'Delete'} icon={<DeleteIcon/>} colorScheme="#00c2e0" color={'red'} onClick={() => {completeTask(task.title); }}/>
+        <IconButton aria-label={'Important'} icon={<StarIcon />} colorScheme="#00c2e0" color={task.important ? 'red': 'white'} onClick={() => {
+          if(task.important === true) task.important = false
+          else task.important = true
+          }}/>
+        <IconButton aria-label={'Completed'} icon={<CheckIcon />} colorScheme="#00c2e0" color={task.completed ? 'red': 'white'} onClick={() => {
+          if(task.completed === true) task.completed = false
+          else task.completed = true
+          }}/>
+      </Flex>
     </Flex>
   );
 };

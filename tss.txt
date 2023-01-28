@@ -1,47 +1,71 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { FC, useState, ChangeEvent, SetStateAction } from "react";
+import { Flex } from '@chakra-ui/react'
 import { Task } from "./interfaces";
+import TodoTask from "../utilities/TodoTasks";
 
-function ModalCreateTask (
-  props: {
-    title: string,
-    setTitle: (value: React.SetStateAction<string>) => void,
-    description: string,
-    setDescription: (value: React.SetStateAction<string>) => void,
-    date: string,
-    setDate: (value: React.SetStateAction<string>) => void,
-    completed: boolean,
-    setCompleted: (value: React.SetStateAction<boolean>) => void,
-    important: boolean,
-    setImportant: (value: React.SetStateAction<boolean>) => void,
-    todoList: Task[],
-    setTodoList: (value: React.SetStateAction<Task[]>) => void }) {
+const ModalCreateTask: FC<{
+  grid: boolean,
+  title: string,
+  setTitle: (value: React.SetStateAction<string>) => void,
+  description: string,
+  setDescription: (value: React.SetStateAction<string>) => void,
+  date: string,
+  setDate: (value: React.SetStateAction<string>) => void,
+  completed: boolean,
+  setCompleted: (value: React.SetStateAction<boolean>) => void,
+  important: boolean,
+  setImportant: (value: React.SetStateAction<boolean>) => void,
+  todoList: Task[],
+  setTodoList: (value: React.SetStateAction<Task[]>) => void
+}> = (
+  grid: boolean,
+  title: string,
+  setTitle: (value: React.SetStateAction<string>) => void,
+  description: string,
+  setDescription: (value: React.SetStateAction<string>) => void,
+  date: string,
+  setDate: (value: React.SetStateAction<string>) => void,
+  completed: boolean,
+  setCompleted: (value: React.SetStateAction<boolean>) => void,
+  important: boolean,
+  setImportant: (value: React.SetStateAction<boolean>) => void,
+  todoList: Task[],
+  setTodoList: (value: React.SetStateAction<Task[]>) => void) => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     if (event.target.name === "title") {
-      props.setTitle(event.target.value);
+      setTitle(event.target.value);
     }
     if (event.target.name === "description"){
-      props.setDescription(String(event.target.value));
+      setDescription(String(event.target.value));
     }
     if (event.target.name === "date") {
-      props.setDate(String(event.target.value));
+      setDate(String(event.target.value));
     }
     if (event.target.name === "completed") {
-      props.setCompleted(Boolean(event.target.value));
+      setCompleted(Boolean(event.target.value));
     }
     if (event.target.name === "important") {
-      props.setImportant(Boolean(event.target.value));
+      setImportant(Boolean(event.target.value));
     }
   };
 
   const addTask = (): void => {
-    const newTask = { title: props.title, description: props.description, date: props.date, completed: props.completed, important: props.important};
-    props.setTodoList([...props.todoList, newTask]);
-    props.setTitle("");
-    props.setDescription("");
-    props.setDate("");
-    props.setCompleted(false);
-    props.setImportant(false);
+    const newTask = { title: title, description: description, date: date, completed: completed, important: important};
+    setTodoList([...todoList, newTask]);
+    setTitle("");
+    setDescription("");
+    setDate("");
+    setCompleted(false);
+    setImportant(false);
+  };
+
+  const completeTask = (taskNameToDelete: string): void => {
+    setTodoList(
+      todoList.filter((task: { title: string; }) => {
+        return task.title !== taskNameToDelete;
+      })
+    );
   };
 
   const [showModal, setShowModal] = useState(false);
@@ -55,9 +79,14 @@ function ModalCreateTask (
     >
         New task
     </button>
+    <Flex className={` justify-start items-start mt-4 gap-3${grid ? ' columns-3':' columns-1'}`}>
+      {todoList.map((task: Task, key: number) => {
+        return <TodoTask key={key} task={task} completeTask={completeTask} />;
+      })}
+    </Flex>
   {showModal ? (
     <>
-        <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+        <div className="flex justify-center items-center overflow-x-hidden bg-[0,0,0.5] overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="flex justify-center items-center relative w-auto my-6 mx-auto max-w-3xl">
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-5/6 bg-white outline-none focus:outline-none">
                     <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
@@ -71,7 +100,7 @@ function ModalCreateTask (
                             placeholder="e.g, study for the test"
                             required
                             name="title"
-                            value={props.title}
+                            value={title}
                             onChange={handleChange}
                             className="w-full rounded"
                         />
@@ -82,7 +111,7 @@ function ModalCreateTask (
                             type="date"
                             className="w-full rounded"
                             name="date"
-                            value={props.date}
+                            value={date}
                             required
                             onChange={handleChange}
                         />
@@ -93,8 +122,8 @@ function ModalCreateTask (
                             placeholder="e.g, study for the test"
                             className="w-full rounded"
                             name="description"
-                            value={props.description}
-                            onChange={({ target }) => props.setDescription(target.value)}
+                            value={description}
+                            onChange={({ target }) => setDescription(target.value)}
                         ></textarea>
                         </label>
                         <label className="mb-0 flex items-center cursor-pointer">

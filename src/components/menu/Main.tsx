@@ -1,9 +1,32 @@
-import { Flex, Box, Select } from "@chakra-ui/react";
-import { useState } from "react";
-import ModalCreateTask from "../utilities/ModalCreateTask"
+import { Flex, Grid, Box, Select } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { Task } from "../utilities/interfaces";
+import TodoTask from "../utilities/TodoTasks";
 
-function Main () {
+function Main (
+    props: {
+      title: string,
+      setTitle: (value: React.SetStateAction<string>) => void,
+      description: string,
+      setDescription: (value: React.SetStateAction<string>) => void,
+      date: string,
+      setDate: (value: React.SetStateAction<string>) => void,
+      completed: boolean,
+      setCompleted: (value: React.SetStateAction<boolean>) => void,
+      important: boolean,
+      setImportant: (value: React.SetStateAction<boolean>) => void,
+      todoList: Task[],
+      setTodoList: (value: React.SetStateAction<Task[]>) => void }) {
     const [grid, setGrid] = useState<boolean>(false)
+
+    const completeTask = (taskNameToDelete: string): void => {
+      props.setTodoList(
+        props.todoList.filter((task: { title: string; }) => {
+          return task.title !== taskNameToDelete;
+        })
+      );
+    };
+
     return (
         <Flex className=" w-full flex-col">
             <Box className="small:w-full md:w-1/3 lg:w-2/5">
@@ -39,7 +62,11 @@ function Main () {
                 </Flex>
             </Flex>
             <Box className=" mx-3">
-                <ModalCreateTask grid={grid}/>
+                <Grid className={` justify-start items-start mt-4 gap-3${grid ? ' grid-cols-5':' grid-cols-1'}`}>
+                {props.todoList.map((task: Task, key: number) => {
+                    return <TodoTask key={key} task={task} completeTask={completeTask} />;
+                })}
+                </Grid>
             </Box>
         </Flex>
     );

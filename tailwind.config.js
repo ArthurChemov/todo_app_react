@@ -7,7 +7,8 @@ module.exports = {
         losAngeles: 'Brush Script MT, cursive'
       },
       screens:{
-        small: '320px'
+        small: '320px',
+        middle: '420px'
       }
     },
   },
