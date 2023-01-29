@@ -28,6 +28,30 @@ function Main (
       );
     };
 
+    const isCompleted = (taskName: string, completed: boolean): void => {
+        props.setTodoList(
+            props.todoList.filter((task: { title: string; completed: boolean }) => {
+                if(task.title !== taskName) return task.title;
+                else if(task.title === taskName) {
+                    task.completed = !completed;
+                    return task.title;
+                }
+            })
+        );
+    };
+
+    const isImportant = (taskName: string, important: boolean): void => {
+        props.setTodoList(
+            props.todoList.filter((task: { title: string; important: boolean }) => {
+                if(task.title !== taskName) return task.title;
+                else if(task.title === taskName) {
+                    task.important = !important;
+                    return task.title;
+                }
+            })
+        );
+    };
+
     return (
         <Flex className={` w-full flex-col md:ml-[208px] lg:ml-[240px] ${props.sidebar ? 'small:ml-[110px]':'small:ml-0'}`}>
             <Box className="small:w-full md:w-1/3 lg:w-2/5">
@@ -65,7 +89,7 @@ function Main (
             <Box className=" mx-3">
                 <Grid className="mt-4 gap-3 " style={grid ? {gridTemplateColumns: 'repeat(auto-fill, 270px)'}:{gridTemplateColumns: 'repeat(1, 100%)'}}>
                 {props.todoList.map((task: Task, key: number) => {
-                    return <TodoTask key={key} task={task} completeTask={completeTask} grid={grid}/>;
+                    return <TodoTask key={key} task={task} completeTask={completeTask} grid={grid} isCompleted={isCompleted} isImportant={isImportant} />;
                 })}
                 </Grid>
             </Box>
