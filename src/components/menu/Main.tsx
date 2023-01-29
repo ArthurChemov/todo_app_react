@@ -16,37 +16,40 @@ function Main (
       setCompleted: (value: React.SetStateAction<boolean>) => void,
       important: boolean,
       setImportant: (value: React.SetStateAction<boolean>) => void,
+      id: string,
+      setId: (value: React.SetStateAction<string>) => void,
       todoList: Task[],
       setTodoList: (value: React.SetStateAction<Task[]>) => void }) {
     const [grid, setGrid] = useState<boolean>(false)
 
-    const completeTask = (taskNameToDelete: string): void => {
+    const completeTask = (taskIdToDelete: string): void => {
       props.setTodoList(
-        props.todoList.filter((task: { title: string; }) => {
-          return task.title !== taskNameToDelete;
+        props.todoList.filter((task: { id: string; }) => {
+            if(task.id !== taskIdToDelete) return task.id;
+            else if(task.id === taskIdToDelete) return !task.id;
         })
       );
     };
 
-    const isCompleted = (taskName: string, completed: boolean): void => {
+    const isCompleted = (taskId: string, completed: boolean): void => {
         props.setTodoList(
-            props.todoList.filter((task: { title: string; completed: boolean }) => {
-                if(task.title !== taskName) return task.title;
-                else if(task.title === taskName) {
+            props.todoList.filter((task: { id: string; completed: boolean }) => {
+                if(task.id !== taskId) return task.id;
+                else if(task.id === taskId) {
                     task.completed = !completed;
-                    return task.title;
+                    return task.id;
                 }
             })
         );
     };
 
-    const isImportant = (taskName: string, important: boolean): void => {
+    const isImportant = (taskId: string, important: boolean): void => {
         props.setTodoList(
-            props.todoList.filter((task: { title: string; important: boolean }) => {
-                if(task.title !== taskName) return task.title;
-                else if(task.title === taskName) {
+            props.todoList.filter((task: { id: string; important: boolean }) => {
+                if(task.id !== taskId) return task.id;
+                else if(task.id === taskId) {
                     task.important = !important;
-                    return task.title;
+                    return task.id;
                 }
             })
         );

@@ -23,7 +23,7 @@ const TodoTask = ({ task, completeTask, grid, isCompleted, isImportant }: Props)
         <span className="rounded">{task.important} </span>
       </Flex>
       <Flex className=" flex-row-reverse">
-        <IconButton aria-label={'Delete'} icon={<DeleteIcon/>} colorScheme="#00c2e0" color={'red'} onClick={() => {completeTask(task.title); }}/>
+        <IconButton aria-label={'Delete'} icon={<DeleteIcon/>} colorScheme="#00c2e0" color={'red'} onClick={() => {completeTask(task.id); }}/>
         <IconButton aria-label={'Important'} icon={<StarIcon />} colorScheme="#00c2e0" style={task.important ? {color: 'red'}: {color: 'white'}} onClick={() => {isImportant(task.title, task.important)}}/>
         <IconButton aria-label={'Completed'} icon={<CheckIcon />} colorScheme="#00c2e0" style={task.completed ? {color: 'red'}: {color: 'white'}} onClick={() => {isCompleted(task.title, task.completed)}}/>
       </Flex>

@@ -36,6 +36,8 @@ function ModalCreateTask (
     setCompleted: (value: React.SetStateAction<boolean>) => void,
     important: boolean,
     setImportant: (value: React.SetStateAction<boolean>) => void,
+    id: string,
+    setId: (value: React.SetStateAction<string>) => void,
     todoList: Task[],
     setTodoList: (value: React.SetStateAction<Task[]>) => void }) {
 
@@ -59,14 +61,28 @@ function ModalCreateTask (
 
   const [showModal, setShowModal] = useState(false);
 
+  const today: Date = new Date();
+  let day: number = today.getDate();
+  let month: number = today.getMonth() + 1;
+  const year: number = today.getFullYear();
+  if (day < 10) {
+    day = +("0" + day);
+  }
+  if (month < 10) {
+    month = +("0" + month);
+  }
+
+  const todayDate: string = year + "-" + month + "-" + day;
+
   const addTask = (): void => {
-    const newTask = { title: props.title, description: props.description, date: props.date, completed: props.completed, important: props.important};
+    const newTask = { title: props.title, description: props.description, date: props.date, completed: props.completed, important: props.important, id: props.id};
     props.setTodoList([...props.todoList, newTask]);
     props.setTitle("");
     props.setDescription("");
-    props.setDate("");
+    props.setDate(todayDate);
     props.setCompleted(false);
     props.setImportant(false);
+    props.setId(Date.now().toString());
     setShowModal(false);
   };
 

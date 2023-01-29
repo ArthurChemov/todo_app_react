@@ -29,6 +29,7 @@ function Body () {
     const [date, setDate] = useState<string>(todayDate);
     const [completed, setCompleted] = useState<boolean>(false);
     const [important, setImportant] = useState<boolean>(false);
+    const [id, setId] = useState<string>(Date.now().toString());
     const [todoList, setTodoList] = useState<Task[]>([]);
 
     return (
@@ -41,14 +42,14 @@ function Body () {
                     To-Do List
                 </Flex>
                 <Box>
-                    <ModalCreateTask title={title} setTitle={setTitle} description={description} setDescription={setDescription} date={date} setDate={setDate} completed={completed} setCompleted={setCompleted} important={important} setImportant={setImportant} todoList={todoList} setTodoList={setTodoList}/>
+                    <ModalCreateTask title={title} setTitle={setTitle} description={description} setDescription={setDescription} date={date} setDate={setDate} completed={completed} setCompleted={setCompleted} important={important} setImportant={setImportant} id={id} setId={setId} todoList={todoList} setTodoList={setTodoList}/>
                 </Box>
             </Flex>
             <Flex className=' h-full w-full flex-row relative'>
                 <Box className={` md:w-52 lg:w-60 md:visible fixed ${sidebar ? 'w-2/6 visible':'w-0 invisible'}`} >
                     <Sidebar/>
                 </Box>
-                <Main sidebar={sidebar} title={title} setTitle={setTitle} description={description} setDescription={setDescription} date={date} setDate={setDate} completed={completed} setCompleted={setCompleted} important={important} setImportant={setImportant} todoList={todoList} setTodoList={setTodoList}/>
+                <Main sidebar={sidebar} title={title} setTitle={setTitle} description={description} setDescription={setDescription} date={date} setDate={setDate} completed={completed} setCompleted={setCompleted} important={important} setImportant={setImportant} id={id} setId={setId} todoList={todoList} setTodoList={setTodoList}/>
             </Flex>
         </Flex>
     );
