@@ -6,13 +6,14 @@ import { Task } from "./interfaces";
 interface Props {
   task: Task;
   completeTask(taskNameToDelete: string): void;
+  grid: boolean
 }
 
-const TodoTask = ({ task, completeTask }: Props) => {
+const TodoTask = ({ task, completeTask, grid }: Props) => {
 
   return (
-    <Flex className=" flex-col p-3 text-white bg-sky-500 rounded-xl border-[1px] border-slate-600 hover:border-0 hover:shadow-2xl w-[270px] min-h-[150px]">
-      <Flex className=" flex-col gap-1 justify-center items-start min-h-[88px]">
+    <Flex className={` justify-between flex-col p-3 text-white bg-sky-500 rounded-xl border-[1px] border-slate-600 hover:border-0 hover:shadow-2xl min-h-[150px] ${grid ? 'w-[270px]':'w-100%'}`}>
+      <Flex className=" flex-col gap-1 justify-center items-start h-auto">
         <span className="rounded">{task.title} </span>
         <span className="rounded">{task.description} </span>
         <span className="rounded">{task.date} </span>

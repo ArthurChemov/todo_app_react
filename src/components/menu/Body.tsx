@@ -37,7 +37,7 @@ function Body () {
                 <Flex className='mt-4 justify-center small:ml-3 small:w-1/12 small:visible md:ml-0 md:w-0 md:invisible'>
                     <IconButton aria-label={'Open Menu'} icon={sidebar ? <CloseIcon />:<HamburgerIcon />} colorScheme='blue' onClick={showSidebar}/>
                 </Flex>
-                <Flex className='font-bold justify-center font-losAngeles pt-3 w-full small:text-4xl middle:text-6xl'>
+                <Flex className='font-bold justify-center font-losAngeles pt-3 w-full small:text-3xl middle:text-6xl'>
                     To-Do List
                 </Flex>
                 <Box>
@@ -45,10 +45,10 @@ function Body () {
                 </Box>
             </Flex>
             <Flex className=' h-full w-full flex-row relative'>
-                <Box className={` md:w-52 lg:w-60 md:visible ${sidebar ? 'w-2/6 visible':'w-0 invisible'}`} >
+                <Box className={` md:w-52 lg:w-60 md:visible fixed ${sidebar ? 'w-2/6 visible':'w-0 invisible'}`} >
                     <Sidebar/>
                 </Box>
-                <Main title={title} setTitle={setTitle} description={description} setDescription={setDescription} date={date} setDate={setDate} completed={completed} setCompleted={setCompleted} important={important} setImportant={setImportant} todoList={todoList} setTodoList={setTodoList}/>
+                <Main sidebar={sidebar} title={title} setTitle={setTitle} description={description} setDescription={setDescription} date={date} setDate={setDate} completed={completed} setCompleted={setCompleted} important={important} setImportant={setImportant} todoList={todoList} setTodoList={setTodoList}/>
             </Flex>
         </Flex>
     );

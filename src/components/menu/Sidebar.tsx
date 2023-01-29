@@ -6,7 +6,7 @@ import { useDate } from '../utilities/useDate';
 function Sidebar() {
 
     return (
-        <Flex className=' h-full items-start flex-col pt-6 ml-2 justify-between'>
+        <Flex className='small:w-[110px] md:w-full h-full items-start flex-col pt-6 ml-2 justify-between'>
             <Box className=" font-serif">
                 {links.map((item, index) => {
                     return (

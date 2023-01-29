@@ -8,7 +8,7 @@ module.exports = {
       },
       screens:{
         small: '320px',
-        middle: '420px'
+        middle: '430px'
       }
     },
   },

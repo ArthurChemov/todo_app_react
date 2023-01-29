@@ -6,7 +6,7 @@ function App() {
   return (
     <ChakraProvider>
       <BrowserRouter>
-        <Box className="h-screen bg-gradient-to-b from-indigo-500 via-purple-500 to-orange-500">
+        <Box className="min-h-screen h-full w-full bg-gradient-to-b from-indigo-500 via-purple-500 to-orange-500">
           <Body/>
         </Box>
       </BrowserRouter>

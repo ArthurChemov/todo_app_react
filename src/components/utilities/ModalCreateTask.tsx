@@ -34,6 +34,8 @@ function ModalCreateTask (
     }
   };
 
+  const [showModal, setShowModal] = useState(false);
+
   const addTask = (): void => {
     const newTask = { title: props.title, description: props.description, date: props.date, completed: props.completed, important: props.important};
     props.setTodoList([...props.todoList, newTask]);
@@ -42,9 +44,8 @@ function ModalCreateTask (
     props.setDate("");
     props.setCompleted(false);
     props.setImportant(false);
+    setShowModal(false);
   };
-
-  const [showModal, setShowModal] = useState(false);
 
   return (
     <>
@@ -80,7 +81,7 @@ function ModalCreateTask (
                         Date
                         <input
                             type="date"
-                            className="w-full rounded"
+                            className="w-full"
                             name="date"
                             value={props.date}
                             required
