@@ -1,28 +1,25 @@
-import { Flex, Grid, Box, Select } from "@chakra-ui/react";
-import React, { useCallback, useState } from "react";
+import { Flex, Box, Select } from "@chakra-ui/react";
+import React, { useState } from "react";
 import { Task } from "../utilities/interfaces";
-import TodoTask from "../utilities/TodoTasks";
+import AllTasks from "../routes/AllTasks";
+import SearchTask from "../routes/SearchTask";
 
 function Main (
     props: {
       sidebar: boolean,
-      title: string,
-      setTitle: (value: React.SetStateAction<string>) => void,
-      description: string,
-      setDescription: (value: React.SetStateAction<string>) => void,
-      date: string,
-      setDate: (value: React.SetStateAction<string>) => void,
-      completed: boolean,
-      setCompleted: (value: React.SetStateAction<boolean>) => void,
-      important: boolean,
-      setImportant: (value: React.SetStateAction<boolean>) => void,
-      id: string,
-      setId: (value: React.SetStateAction<string>) => void,
       todoList: Task[],
       setTodoList: (value: React.SetStateAction<Task[]>) => void }) {
     const [grid, setGrid] = useState<boolean>(false)
+    const [isSearch, setIsSearch] = useState<boolean>(false)
+    const [search, setSearch] = useState<string>('')
 
-    const completeTask = (taskIdToDelete: string): void => {
+    const handleSearch = (evt: { target: { value: string; }; }) => {
+        setSearch(evt.target.value)
+        if (evt.target.value !== '') setIsSearch(true);
+        else if (evt.target.value === '') setIsSearch(false);
+    };
+
+    const deleteTask = (taskIdToDelete: string): void => {
       props.setTodoList(
         props.todoList.filter((task: { id: string; }) => {
             if(task.id !== taskIdToDelete) return task.id;
@@ -55,12 +52,25 @@ function Main (
         );
     };
 
+    const isTask = () => {
+        if(isSearch === false) {
+            return(
+                <AllTasks grid={grid} todoList={props.todoList} setTodoList={props.setTodoList} deleteTask={deleteTask} isCompleted={isCompleted} isImportant={isImportant}/>
+            )
+        }
+        if(isSearch === true) {
+            return(
+                <SearchTask grid={grid} search={search} todoList={props.todoList} setTodoList={props.setTodoList} deleteTask={deleteTask} isCompleted={isCompleted} isImportant={isImportant}/>
+            )
+        }
+    }
+
     return (
         <Flex className={` w-full flex-col md:ml-[208px] lg:ml-[240px] ${props.sidebar ? 'small:ml-[110px]':'small:ml-0'}`}>
             <Box className="small:w-full md:w-1/3 lg:w-2/5">
                 <form className=" relative pt-6 mx-3" autoComplete="off">
                     <label htmlFor="search" className="sr-only"></label>
-                    <input type="search" id="search" placeholder="Search task" className=" small: w-full h-8 md:max-w-1/3 lg:max-w-2/5 rounded-md inputStyles pl-2"/>
+                    <input type="search" id="search" placeholder="Search task" className=" small: w-full h-8 md:max-w-1/3 lg:max-w-2/5 rounded-md inputStyles pl-2" onChange={handleSearch}/>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="absolute small:w-3 small:top-9 md:w-4 md:top-8 right-4 text-slate-400">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"></path>
                     </svg>
@@ -82,19 +92,23 @@ function Main (
                 <Flex className=" mr-3">
                     <Select backgroundColor='white' color='#A0AEC0' className="ml-auto inputStyles">
                         <option value="" hidden>Sort by</option>
-                        <option value="min-date" className="bg-slate-100 dark:bg-slate-800">Earlier first</option>
-                        <option value="max-date" className="bg-slate-100 dark:bg-slate-800">Later first</option>
-                        <option value="completed-first" className="bg-slate-100 dark:bg-slate-800">Completed first</option>
-                        <option value="uncompleted-first" className="bg-slate-100 dark:bg-slate-800">Uncompleted first</option>
+                        <option value="min-date" className="bg-slate-100 ">Earlier first</option>
+                        <option value="max-date" className="bg-slate-100 ">Later first</option>
+                        <option value="completed-first" className="bg-slate-100 ">Completed first</option>
+                        <option value="uncompleted-first" className="bg-slate-100 ">Uncompleted first</option>
                     </Select>
                 </Flex>
             </Flex>
             <Box className=" mx-3">
-                <Grid className="mt-4 gap-3 " style={grid ? {gridTemplateColumns: 'repeat(auto-fill, 270px)'}:{gridTemplateColumns: 'repeat(1, 100%)'}}>
-                {props.todoList.map((task: Task, key: number) => {
-                    return <TodoTask key={key} task={task} completeTask={completeTask} grid={grid} isCompleted={isCompleted} isImportant={isImportant} />;
-                })}
-                </Grid>
+                {isSearch ? (
+                    <>
+                    <SearchTask grid={grid} search={search} todoList={props.todoList} setTodoList={props.setTodoList} deleteTask={deleteTask} isCompleted={isCompleted} isImportant={isImportant}/>
+                    </>
+                ) : (
+                    <>
+                    <AllTasks grid={grid} todoList={props.todoList} setTodoList={props.setTodoList} deleteTask={deleteTask} isCompleted={isCompleted} isImportant={isImportant}/>
+                    </>
+                )}
             </Box>
         </Flex>
     );

@@ -49,7 +49,7 @@ function Body () {
                 <Box className={` md:w-52 lg:w-60 md:visible fixed ${sidebar ? 'w-2/6 visible':'w-0 invisible'}`} >
                     <Sidebar/>
                 </Box>
-                <Main sidebar={sidebar} title={title} setTitle={setTitle} description={description} setDescription={setDescription} date={date} setDate={setDate} completed={completed} setCompleted={setCompleted} important={important} setImportant={setImportant} id={id} setId={setId} todoList={todoList} setTodoList={setTodoList}/>
+                <Main sidebar={sidebar} todoList={todoList} setTodoList={setTodoList}/>
             </Flex>
         </Flex>
     );

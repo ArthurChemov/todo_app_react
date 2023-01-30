@@ -97,9 +97,9 @@ function ModalCreateTask (
     </button>
   {showModal ? (
     <>
-        <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="flex justify-center items-center relative w-auto my-6 mx-auto max-w-3xl">
-                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-5/6 bg-white outline-none focus:outline-none">
+        <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none w-full">
+            <div className="flex justify-center items-center w-full my-6 mx-auto h-full fixed" style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
+                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-4/6 bg-white outline-none focus:outline-none">
                     <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
                         <h3 className="text-3xl font=semibold">Task Info</h3>
                     </div>
