@@ -2,7 +2,7 @@ import { Grid } from "@chakra-ui/react";
 import { Task } from "../utilities/interfaces";
 import TodoTask from "../utilities/TodoTasks";
 
-function UncompletedTasks(
+function UncompleteFirst(
     props: {
       grid: boolean,
       todoList: Task[],
@@ -17,8 +17,12 @@ function UncompletedTasks(
                 if(task.completed === false)
                 return <TodoTask key={key} task={task} grid={props.grid} deleteTask={props.deleteTask} isCompleted={props.isCompleted} isImportant={props.isImportant} />;
             })}
+            {props.todoList.map((task: Task, key: number) => {
+                if(task.completed === true)
+                return <TodoTask key={key} task={task} grid={props.grid} deleteTask={props.deleteTask} isCompleted={props.isCompleted} isImportant={props.isImportant} />;
+            })}
         </Grid>
     );
 }
 
-export default UncompletedTasks;
+export default UncompleteFirst;

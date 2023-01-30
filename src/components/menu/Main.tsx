@@ -3,6 +3,10 @@ import React, { useState } from "react";
 import { Task } from "../utilities/interfaces";
 import AllTasks from "../routes/AllTasks";
 import SearchTask from "../routes/SearchTask";
+import CompleteFirst from "../sort/CompleteFirst";
+import UncompleteFirst from "../sort/UncompleteFirst";
+import MinDateFirst from "../sort/MinDateFirst";
+import MaxDateFirst from "../sort/MaxDateFirst";
 
 function Main (
     props: {
@@ -10,20 +14,61 @@ function Main (
       todoList: Task[],
       setTodoList: (value: React.SetStateAction<Task[]>) => void }) {
     const [grid, setGrid] = useState<boolean>(false)
+
+    const [isSorted, setIsSorted] = useState<boolean>(false)
+    const [minDate, setMinDate] = useState<boolean>(false)
+    const [maxDate, setMaxDate] = useState<boolean>(false)
+    const [complete, setComplete] = useState<boolean>(false)
+    const [uncomplete, setUncomplete] = useState<boolean>(false)
+
     const [isSearch, setIsSearch] = useState<boolean>(false)
     const [search, setSearch] = useState<string>('')
 
-    const handleSearch = (evt: { target: { value: string; }; }) => {
-        setSearch(evt.target.value)
-        if (evt.target.value !== '') setIsSearch(true);
-        else if (evt.target.value === '') setIsSearch(false);
+    const handleSorted = (value: string) => {
+        console.log(value)
+        setIsSorted(true)
+        if (value === "min-date") {
+          setMaxDate(false);
+          setComplete(false);
+          setUncomplete(false);
+          setMinDate(true);
+        }
+        if (value === "max-date"){
+            setMinDate(false);
+            setComplete(false);
+            setUncomplete(false);
+            setMaxDate(true);
+        }
+        if (value === "completed-first") {
+            setMinDate(false);
+            setMaxDate(false);
+            setUncomplete(false);
+            setComplete(true);
+        }
+        if (value === "uncompleted-first") {
+            setMinDate(false);
+            setMaxDate(false);
+            setComplete(false);
+            setUncomplete(true);
+        }
+        if(value === "") {
+            setIsSorted(false)
+            setIsSearch(false)
+        }
+    }
+
+    const handleSearch = (event: { target: { value: string; }; }) => {
+        setIsSorted(false)
+        setSearch(event.target.value)
+        if (event.target.value !== '') setIsSearch(true)
+        else if (event.target.value === '') setIsSearch(false)
     };
 
     const deleteTask = (taskIdToDelete: string): void => {
       props.setTodoList(
         props.todoList.filter((task: { id: string; }) => {
-            if(task.id !== taskIdToDelete) return task.id;
-            else if(task.id === taskIdToDelete) return !task.id;
+            if(task.id !== taskIdToDelete) return task.id
+            else if(task.id === taskIdToDelete) return !task.id
         })
       );
     };
@@ -31,10 +76,10 @@ function Main (
     const isCompleted = (taskId: string, completed: boolean): void => {
         props.setTodoList(
             props.todoList.filter((task: { id: string; completed: boolean }) => {
-                if(task.id !== taskId) return task.id;
+                if(task.id !== taskId) return task.id
                 else if(task.id === taskId) {
-                    task.completed = !completed;
-                    return task.id;
+                    task.completed = !completed
+                    return task.id
                 }
             })
         );
@@ -43,27 +88,14 @@ function Main (
     const isImportant = (taskId: string, important: boolean): void => {
         props.setTodoList(
             props.todoList.filter((task: { id: string; important: boolean }) => {
-                if(task.id !== taskId) return task.id;
+                if(task.id !== taskId) return task.id
                 else if(task.id === taskId) {
-                    task.important = !important;
-                    return task.id;
+                    task.important = !important
+                    return task.id
                 }
             })
         );
     };
-
-    const isTask = () => {
-        if(isSearch === false) {
-            return(
-                <AllTasks grid={grid} todoList={props.todoList} setTodoList={props.setTodoList} deleteTask={deleteTask} isCompleted={isCompleted} isImportant={isImportant}/>
-            )
-        }
-        if(isSearch === true) {
-            return(
-                <SearchTask grid={grid} search={search} todoList={props.todoList} setTodoList={props.setTodoList} deleteTask={deleteTask} isCompleted={isCompleted} isImportant={isImportant}/>
-            )
-        }
-    }
 
     return (
         <Flex className={` w-full flex-col md:ml-[208px] lg:ml-[240px] ${props.sidebar ? 'small:ml-[110px]':'small:ml-0'}`}>
@@ -90,8 +122,8 @@ function Main (
                     </button>
                 </Flex>
                 <Flex className=" mr-3">
-                    <Select backgroundColor='white' color='#A0AEC0' className="ml-auto inputStyles">
-                        <option value="" hidden>Sort by</option>
+                    <Select backgroundColor='white' color='#A0AEC0' className="ml-auto inputStyles" onChange={(value) => handleSorted(value.target.value)}>
+                        <option value="" className="bg-slate-100 ">Sort by</option>
                         <option value="min-date" className="bg-slate-100 ">Earlier first</option>
                         <option value="max-date" className="bg-slate-100 ">Later first</option>
                         <option value="completed-first" className="bg-slate-100 ">Completed first</option>
@@ -100,13 +132,36 @@ function Main (
                 </Flex>
             </Flex>
             <Box className=" mx-3">
-                {isSearch ? (
+                {isSorted ? (
                     <>
-                    <SearchTask grid={grid} search={search} todoList={props.todoList} setTodoList={props.setTodoList} deleteTask={deleteTask} isCompleted={isCompleted} isImportant={isImportant}/>
+                    {minDate ? (
+                        <>
+                        <MinDateFirst grid={grid} todoList={props.todoList} setTodoList={props.setTodoList} deleteTask={deleteTask} isCompleted={isCompleted} isImportant={isImportant}/>
+                        </>) : null}
+                    {maxDate ? (
+                        <>
+                        <MaxDateFirst grid={grid} todoList={props.todoList} setTodoList={props.setTodoList} deleteTask={deleteTask} isCompleted={isCompleted} isImportant={isImportant}/>
+                        </>) : null}
+                    {complete ? (
+                        <>
+                        <CompleteFirst grid={grid} todoList={props.todoList} setTodoList={props.setTodoList} deleteTask={deleteTask} isCompleted={isCompleted} isImportant={isImportant}/>
+                        </>) : null}
+                    {uncomplete ? (
+                        <>
+                        <UncompleteFirst grid={grid} todoList={props.todoList} setTodoList={props.setTodoList} deleteTask={deleteTask} isCompleted={isCompleted} isImportant={isImportant}/>
+                        </>) : null}
                     </>
                 ) : (
                     <>
-                    <AllTasks grid={grid} todoList={props.todoList} setTodoList={props.setTodoList} deleteTask={deleteTask} isCompleted={isCompleted} isImportant={isImportant}/>
+                    {isSearch ? (
+                        <>
+                        <SearchTask grid={grid} search={search} todoList={props.todoList} setTodoList={props.setTodoList} deleteTask={deleteTask} isCompleted={isCompleted} isImportant={isImportant}/>
+                        </>
+                    ) : (
+                        <>
+                        <AllTasks grid={grid} todoList={props.todoList} setTodoList={props.setTodoList} deleteTask={deleteTask} isCompleted={isCompleted} isImportant={isImportant}/>
+                        </>
+                    )}
                     </>
                 )}
             </Box>
