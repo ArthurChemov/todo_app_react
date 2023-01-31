@@ -1,8 +1,7 @@
 import { Flex, Box, IconButton } from '@chakra-ui/react'
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import { Task } from "../utilities/interfaces";
-import Sidebar from './Sidebar';
 import Main from './Main';
 import ModalCreateTask from '../utilities/ModalCreateTask';
 
@@ -45,12 +44,7 @@ function Body () {
                     <ModalCreateTask title={title} setTitle={setTitle} description={description} setDescription={setDescription} date={date} setDate={setDate} completed={completed} setCompleted={setCompleted} important={important} setImportant={setImportant} id={id} setId={setId} todoList={todoList} setTodoList={setTodoList}/>
                 </Box>
             </Flex>
-            <Flex className=' h-full w-full flex-row relative'>
-                <Box className={` md:w-52 lg:w-60 md:visible fixed ${sidebar ? 'w-2/6 visible':'w-0 invisible'}`} >
-                    <Sidebar/>
-                </Box>
-                <Main sidebar={sidebar} todoList={todoList} setTodoList={setTodoList}/>
-            </Flex>
+            <Main sidebar={sidebar} todoList={todoList} setTodoList={setTodoList}/>
         </Flex>
     );
 }
