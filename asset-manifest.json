@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "//arthurchemov.github.io/todo_app_react/static/css/main.7180fbe9.css",
+    "main.js": "//arthurchemov.github.io/todo_app_react/static/js/main.5350eb4b.js",
+    "index.html": "//arthurchemov.github.io/todo_app_react/index.html",
+    "main.7180fbe9.css.map": "//arthurchemov.github.io/todo_app_react/static/css/main.7180fbe9.css.map",
+    "main.5350eb4b.js.map": "//arthurchemov.github.io/todo_app_react/static/js/main.5350eb4b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7180fbe9.css",
+    "static/js/main.5350eb4b.js"
+  ]
+}
